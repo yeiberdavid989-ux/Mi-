@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Cielo estrellado — Ramo amarillo</title>
+<style>
+  :root{ --bg:#000; }
+  html,body{
+    height:100%; margin:0;
+    background:var(--bg);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  }
+  .stage{
+    position:fixed; inset:0; overflow:hidden;
+    background:linear-gradient(#020208 0%, #000 60%);
+  }
+  canvas#space{
+    display:block; width:100%; height:100%;
+  }
+  /* Ramo centrado */
+  .bouquet {
+    position:fixed;
+    bottom:10vh;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(420px,60vw);
+    max-width:520px;
+    z-index:40;
+    pointer-events:none;
+  }
+  /* Texto debajo del ramo */
+  .dedication{
+    position:fixed;
+    bottom:4vh;
+    left:50%;
+    transform:translateX(-50%);
+    color:#ffdd33;
+    font-size:1.8rem;
+    font-weight:bold;
+    z-index:50;
+    text-shadow:0 0 8px rgba(255,220,0,0.8);
+  }
+  .caption{
+    position:fixed;
+    left:50%; top:6%;
+    transform:translateX(-50%);
+    color:rgba(255,255,255,0.85);
+    z-index:30;
+    font-size:14px;
+    letter-spacing:0.08em;
+  }
+  @media(max-width:420px){
+    .bouquet{ width:70vw; }
+    .dedication{ font-size:1.4rem; }
+    .caption{ font-size:12px; }
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <canvas id="space"></canvas>
+    <div class="caption">Cielo nocturno — flores amarillas</div>
+
+    <!-- Ramo de flores -->
+    <svg class="bouquet" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="petalGrad" cx="30%" cy="30%">
+          <stop offset="0%" stop-color="#fff97a"/>
+          <stop offset="60%" stop-color="#ffd43a"/>
+          <stop offset="100%" stop-color="#f2b400"/>
+        </radialGradient>
+        <linearGradient id="stem" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#356a2a"/>
+          <stop offset="100%" stop-color="#1f4b1f"/>
+        </linearGradient>
+      </defs>
+      <g transform="translate(80,40) scale(0.9)">
+        <g transform="translate(120,380) rotate(-8)">
+          <circle cx="0" cy="0" r="48" fill="url(#petalGrad)"/>
+          <circle cx="0" cy="0" r="14" fill="#ffb300"/>
+        </g>
+        <g transform="translate(260,320) rotate(14)">
+          <circle cx="0" cy="0" r="40" fill="url(#petalGrad)"/>
+          <circle cx="0" cy="0" r="12" fill="#f7a800"/>
+        </g>
+        <g transform="translate(200,470) rotate(-22)">
+          <circle cx="0" cy="0" r="44" fill="url(#petalGrad)"/>
+          <circle cx="0" cy="0" r="11" fill="#ff9f00"/>
+        </g>
+        <g transform="translate(330,420)">
+          <circle cx="0" cy="0" r="28" fill="url(#petalGrad)"/>
+          <circle cx="0" cy="0" r="8" fill="#ffab00"/>
+        </g>
+        <!-- Tallos -->
+        <path d="M420 540 C360 610 300 700 260 780" stroke="url(#stem)" stroke-width="10" fill="none"/>
+        <path d="M180 560 C150 640 120 720 90 770" stroke="url(#stem)" stroke-width="8" fill="none"/>
+        <path d="M300 560 C330 640 370 710 420 760" stroke="url(#stem)" stroke-width="9" fill="none"/>
+      </g>
+    </svg>
+
+    <!-- Texto "para ti" -->
+    <div class="dedication">para ti</div>
+  </div>
+
+<script>
+/* Estrellas y cometas (igual que antes) */
+(function(){
+  const canvas=document.getElementById('space');
+  const ctx=canvas.getContext('2d');
+  function resize(){
+    canvas.width=innerWidth;
+    canvas.height=innerHeight;
+  }
+  resize(); addEventListener('resize',resize);
+
+  const stars=[];
+  for(let i=0;i<200;i++){
+    stars.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.5,alpha:Math.random()});
+  }
+
+  const comets=[];
+  function addComet(){
+    comets.push({x:-50,y:Math.random()*innerHeight*0.5,vx:200+Math.random()*100,vy:50,life:0});
+  }
+
+  let last=performance.now();
+  function loop(now){
+    const dt=(now-last)/1000; last=now;
+    ctx.fillStyle="#000"; ctx.fillRect(0,0,innerWidth,innerHeight);
+
+    for(const s of stars){
+      ctx.fillStyle=`rgba(255,255,255,${0.5+0.5*Math.sin(now*0.002+s.alpha)})`;
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill();
+    }
+
+    if(Math.random()<0.01) addComet();
+    for(let i=comets.length-1;i>=0;i--){
+      const c=comets[i];
+      c.x+=c.vx*dt; c.y+=c.vy*dt; c.life+=dt;
+      const grad=ctx.createRadialGradient(c.x,c.y,0,c.x,c.y,80);
+      grad.addColorStop(0,"rgba(255,255,200,0.8)");
+      grad.addColorStop(1,"rgba(255,255,200,0)");
+      ctx.fillStyle=grad;
+      ctx.beginPath(); ctx.arc(c.x,c.y,80,0,Math.PI*2); ctx.fill();
+      if(c.life>3) comets.splice(i,1);
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
