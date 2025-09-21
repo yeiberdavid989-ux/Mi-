@@ -3,116 +3,63 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Paisaje con flores</title>
+<title>Flores para ti</title>
 <style>
   html,body{
     margin:0; padding:0;
     height:100%; overflow:hidden;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-  }
-  .stage{
-    position:relative;
-    width:100%; height:100%;
-    background:linear-gradient(to top, #4caf50 35%, #87ceeb 100%); /* verde césped abajo, azul arriba */
-    overflow:hidden;
+    font-family: system-ui, sans-serif;
+    background:#6a0dad; /* Violeta */
   }
 
-  /* Nubes */
-  .cloud {
+  /* Estrellas */
+  .star {
     position:absolute;
+    width:3px; height:3px;
     background:white;
     border-radius:50%;
-    opacity:0.9;
-    animation: moveClouds 60s linear infinite;
+    animation: twinkle 2s infinite alternate;
   }
-  .cloud::before, .cloud::after {
-    content:"";
-    position:absolute;
-    background:white;
-    border-radius:50%;
-  }
-  .cloud.small {
-    width:80px; height:50px;
-    top:15%; left:-120px;
-    animation-duration:40s;
-  }
-  .cloud.small::before {
-    width:50px; height:50px;
-    top:-10px; left:15px;
-  }
-  .cloud.small::after {
-    width:60px; height:60px;
-    top:-15px; left:40px;
-  }
-  .cloud.big {
-    width:150px; height:80px;
-    top:30%; left:-200px;
-    animation-duration:70s;
-  }
-  .cloud.big::before {
-    width:100px; height:100px;
-    top:-20px; left:30px;
-  }
-  .cloud.big::after {
-    width:120px; height:120px;
-    top:-30px; left:70px;
-  }
-  @keyframes moveClouds {
-    from { transform:translateX(0); }
-    to   { transform:translateX(120vw); }
-  }
-
-  /* Césped en frente */
-  .grass {
-    position:absolute;
-    bottom:0; left:0; right:0;
-    height:30vh;
-    background:linear-gradient(to top, #2e7d32, #66bb6a);
-    z-index:5;
+  @keyframes twinkle {
+    from { opacity:0.2; transform:scale(1); }
+    to   { opacity:1; transform:scale(1.5); }
   }
 
   /* Ramo centrado */
   .bouquet {
     position:absolute;
-    bottom:12vh;
+    bottom:15vh;
     left:50%;
     transform:translateX(-50%);
     width:min(320px,70vw);
-    max-width:380px;
-    z-index:10;
+    max-width:350px;
   }
 
-  /* Texto debajo del ramo */
+  /* Texto */
   .dedication{
     position:absolute;
-    bottom:4vh;
+    bottom:5vh;
     left:50%;
     transform:translateX(-50%);
     color:#ffdd33;
     font-size:1.8rem;
     font-weight:bold;
-    z-index:20;
-    text-shadow:0 0 8px rgba(255,220,0,0.8);
-  }
-  @media(max-width:420px){
-    .bouquet{ width:75vw; }
-    .dedication{ font-size:1.4rem; }
+    text-shadow:0 0 10px rgba(255,220,0,0.8);
   }
 </style>
 </head>
 <body>
-<div class="stage">
+  
+  <!-- Estrellas -->
+  <div class="star" style="top:10%;left:20%;"></div>
+  <div class="star" style="top:25%;left:50%;"></div>
+  <div class="star" style="top:15%;left:70%;"></div>
+  <div class="star" style="top:40%;left:30%;"></div>
+  <div class="star" style="top:50%;left:80%;"></div>
+  <div class="star" style="top:60%;left:60%;"></div>
 
-  <!-- Nubes -->
-  <div class="cloud small"></div>
-  <div class="cloud big"></div>
-
-  <!-- Césped frontal -->
-  <div class="grass"></div>
-
-  <!-- Ramo de flores SVG -->
+  <!-- Ramo de flores -->
   <svg class="bouquet" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-
     <defs>
       <g id="flor">
         <!-- Pétalos -->
@@ -125,23 +72,21 @@
       </g>
     </defs>
 
-    <!-- Flores -->
+    <!-- Flores bien centradas en sus tallos -->
     <use href="#flor" x="250" y="200"/>
-    <use href="#flor" x="200" y="250" transform="scale(0.9)"/>
-    <use href="#flor" x="300" y="250" transform="scale(0.9)"/>
+    <use href="#flor" x="210" y="250" transform="scale(0.9)"/>
+    <use href="#flor" x="290" y="250" transform="scale(0.9)"/>
     <use href="#flor" x="230" y="300" transform="scale(0.8)"/>
     <use href="#flor" x="270" y="300" transform="scale(0.8)"/>
 
-    <!-- Tallos -->
-    <path d="M250 240 C240 320 230 400 220 480" stroke="green" stroke-width="6" fill="none"/>
-    <path d="M250 240 C260 320 270 400 280 480" stroke="green" stroke-width="6" fill="none"/>
-    <path d="M200 270 C210 350 210 420 210 480" stroke="green" stroke-width="5" fill="none"/>
-    <path d="M300 270 C295 360 295 420 290 480" stroke="green" stroke-width="5" fill="none"/>
-
+    <!-- Tallos ajustados -->
+    <path d="M250 240 C245 320 240 400 240 480" stroke="green" stroke-width="6" fill="none"/>
+    <path d="M250 240 C255 320 260 400 260 480" stroke="green" stroke-width="6" fill="none"/>
+    <path d="M210 270 C215 350 215 420 215 480" stroke="green" stroke-width="5" fill="none"/>
+    <path d="M290 270 C285 360 285 420 285 480" stroke="green" stroke-width="5" fill="none"/>
   </svg>
 
-  <!-- Texto "para ti" -->
+  <!-- Texto -->
   <div class="dedication">para ti</div>
-</div>
 </body>
-  </html>
+</html>
