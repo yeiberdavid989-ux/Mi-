@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Cielo estrellado — Ramo amarillo</title>
+<title>Cielo estrellado</title>
 <style>
   :root{ --bg:#000; }
   html,body{
@@ -60,7 +60,7 @@
 <body>
   <div class="stage">
     <canvas id="space"></canvas>
-    <div class="caption">Cielo nocturno — flores amarillas</div>
+    <div class="caption">tus flores amarillas</div>
 
     <!-- Ramo hecho con SVG -->
     <svg class="bouquet" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
