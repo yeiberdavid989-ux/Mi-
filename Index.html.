@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Cielo estrellado — Ramo amarillo</title>
+<title>Cielo</title>
 <style>
   :root{ --bg:#000; }
   html,body{
@@ -63,7 +63,7 @@
     <div class="caption">Cielo nocturno — flores amarillas</div>
 
     <!-- Ramo de flores (imagen PNG) -->
-    <img src="https://i.ibb.co/5M9zjL2/ramo-amarillo.png" alt="Ramo amarillo" class="bouquet">
+    <img src="https://pin.it/4gbq3VrEy" alt="Ramo amarillo" class="bouquet">
 
     <!-- Texto "para ti" -->
     <div class="dedication">para ti</div>
